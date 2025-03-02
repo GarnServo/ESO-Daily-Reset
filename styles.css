@@ -1,0 +1,201 @@
+:root {
+    --md-sys-color-background: #121212;
+    --md-sys-color-surface: #1e1e1e;
+    --md-sys-color-surface-variant: #2c2c2c;
+    --md-sys-color-primary: #bb86fc;
+    --md-sys-color-on-surface: #e0e0e0;
+    --md-sys-color-on-surface-variant: #cfcfcf;
+    --md-sys-color-outline: #757575;
+}
+
+*,:before,:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.6;
+    padding: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.surface {
+    background: var(--md-sys-color-surface);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+}
+
+header { text-align: center; }
+
+h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.server-toggle { padding: 16px 24px; }
+
+.toggle-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 16px;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--md-sys-color-surface-variant);
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    transition: background-color .3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.handle {
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: var(--md-sys-color-primary);
+    border-radius: 50%;
+    transition: transform .3s cubic-bezier(0.4,0,0.2,1);
+}
+
+input:checked + .slider .handle { transform: translateX(30px); }
+
+.flag-left, .flag-right {
+    font-size: 18px;
+    line-height: 1;
+    transition: transform .3s cubic-bezier(0.4,0,0.2,1),
+                opacity .3s cubic-bezier(0.4,0,0.2,1);
+}
+
+input:checked + .slider .flag-left {
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+input:not(:checked) + .slider .flag-right {
+    opacity: 0.5;
+    transform: scale(0.8);
+}
+
+.toggle-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: opacity .2s cubic-bezier(0.4,0,0.2,1);
+    will-change: opacity;
+}
+
+.timer-container { padding: 24px; }
+
+.current-time { margin-bottom: 24px; }
+
+.current-time h3, .countdown h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+}
+
+.time-text, .reset-text {
+    transition: opacity .2s cubic-bezier(0.4,0,0.2,1);
+    will-change: opacity;
+}
+
+.time-display {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 24px 0;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-value {
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    transition: transform .2s cubic-bezier(0.4,0,0.2,1),
+                opacity .2s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform, opacity;
+}
+
+.time-unit small {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.reset-text {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+footer {
+    padding: 16px;
+    text-align: center;
+}
+
+footer p {
+    color: var(--md-sys-color-outline);
+    font-size: 12px;
+    font-weight: 400;
+    margin: 4px 0;
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 24px; }
+    .time-display { gap: 16px; }
+    .time-value { font-size: 28px; }
+    .surface { border-radius: 12px; }
+}
