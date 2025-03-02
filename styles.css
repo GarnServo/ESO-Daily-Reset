@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
     --md-sys-color-background: #121212;
     --md-sys-color-surface: #1e1e1e;
@@ -8,6 +9,7 @@
     --md-sys-color-outline: #757575;
 }
 
+/* Global Styles */
 *,:before,:after {
     box-sizing: border-box;
     margin: 0;
@@ -24,6 +26,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Container Styles */
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -37,6 +40,7 @@ body {
     box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
 }
 
+/* Header Styles */
 header { text-align: center; }
 
 h1 {
@@ -88,7 +92,7 @@ h2 {
     justify-content: center;
 }
 
-/* Time Display (unchanged from previous) */
+/* Time Display */
 .time-display {
     display: flex;
     justify-content: center;
@@ -118,6 +122,7 @@ h2 {
     margin-top: 8px;
 }
 
+/* Server Toggle */
 .server-toggle {
     padding: 16px 0;
     border-top: 1px solid var(--md-sys-color-outline);
@@ -195,8 +200,10 @@ input:not(:checked) + .slider .flag-right {
     will-change: opacity;
 }
 
+/* Timer Container */
 .timer-container { padding: 24px; }
 
+/* Current Time */
 .current-time { margin-bottom: 24px; }
 
 .current-time h3, .countdown h3 {
@@ -211,6 +218,7 @@ input:not(:checked) + .slider .flag-right {
     will-change: opacity;
 }
 
+/* Time Display */
 .time-display {
     display: flex;
     justify-content: center;
@@ -239,12 +247,14 @@ input:not(:checked) + .slider .flag-right {
     font-weight: 400;
 }
 
+/* Reset Text */
 .reset-text {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 14px;
     font-weight: 400;
 }
 
+/* Footer */
 footer {
     padding: 16px;
     text-align: center;
@@ -257,7 +267,7 @@ footer p {
     margin: 4px 0;
 }
 
-/* New Secondary Info Section */
+/* Secondary Info Section */
 .secondary-info {
     margin-top: 24px;
     padding-top: 16px;
@@ -290,7 +300,7 @@ footer p {
     will-change: opacity;
 }
 
-/* Updated media queries */
+/* Media Queries */
 @media (max-width: 600px) {
     h1 { font-size: 24px; }
     .time-display { gap: 16px; }

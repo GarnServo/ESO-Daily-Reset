@@ -1,6 +1,7 @@
 (() => {
     'use strict';
 
+    // Define reset times for US and EU servers
     const resetTimes = {
         US: { hour: 10, minute: 0 },
         EU: { hour: 3, minute: 0 }
@@ -8,6 +9,8 @@
 
     let currentServer = 'US';
     let lastCurrentTime = '';
+    
+    // Get references to DOM elements
     const elements = {
         serverText: document.getElementById('serverText'),
         currentTime: document.getElementById('currentTime'),
@@ -17,6 +20,7 @@
         resetTime: document.getElementById('resetTime')
     };
 
+    // Function to animate element text change
     const animateElement = (element, newValue, transform = false) => {
         if (element.textContent !== newValue) {
             element.style.transition = transform 
@@ -37,12 +41,14 @@
         return false;
     };
 
+    // Function to switch between US and EU servers
     const switchServer = (isChecked) => {
         currentServer = isChecked ? 'EU' : 'US';
         animateElement(elements.serverText, `${currentServer} Server`);
         updateTimer();
     };
 
+    // Function to update the timer and reset time display
     const updateTimer = () => {
         const now = new Date();
         const newCurrentTime = now.toLocaleTimeString();

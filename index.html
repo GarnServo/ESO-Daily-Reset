@@ -15,15 +15,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Rest of your existing HTML remains unchanged -->
+    <!-- Container -->
     <div class="container">
+        <!-- Header Section -->
         <header class="surface">
             <h1>Elder Scrolls Online</h1>
             <h2>Daily Quest Reset Timer</h2>
         </header>
 
+        <!-- Timer Container -->
         <div class="surface timer-container">
             <div class="countdown">
+                <!-- Server Toggle -->
                 <div class="server-toggle">
                     <div class="toggle-label">Server Region</div>
                     <div class="toggle-container">
@@ -41,6 +44,7 @@
                     </div>
                 </div>
 
+                <!-- Countdown Display -->
                 <h3>Next Reset In</h3>
                 <div class="time-display">
                     <div class="time-unit">
@@ -57,6 +61,7 @@
                     </div>
                 </div>
 
+                <!-- Secondary Info Section -->
                 <div class="secondary-info">
                     <p id="resetTime" class="reset-text"></p>
                     <p class="current-time">
@@ -67,6 +72,7 @@
             </div>
         </div>
 
+        <!-- Footer Section -->
         <footer class="surface">
             <p>Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>
             <p>Times are displayed in your local timezone</p>
