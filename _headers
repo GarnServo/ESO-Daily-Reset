@@ -5,3 +5,15 @@
   Cache-Control: max-age=31536000, public
 /script.js
   Cache-Control: max-age=31536000, public
+/images/favicon-16x16.png
+  Cache-Control: max-age=31536000, public
+/images/favicon-32x32.png
+  Cache-Control: max-age=31536000, public
+/images/android-chrome-192x192.png
+  Cache-Control: max-age=31536000, public
+/images/android-chrome-512x512.png
+  Cache-Control: max-age=31536000, public
+/images/apple-touch-icon.png
+  Cache-Control: max-age=31536000, public
+/images/site.webmanifest
+  Cache-Control: max-age=31536000, public
