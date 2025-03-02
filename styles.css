@@ -52,7 +52,27 @@ h2 {
     color: var(--md-sys-color-on-surface-variant);
 }
 
-.server-toggle { padding: 16px 24px; }
+/* Timer Container */
+.timer-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Countdown Section */
+.countdown {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Server Toggle (now above timer) */
+.server-toggle {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--md-sys-color-outline);
+    margin-bottom: 24px;
+}
 
 .toggle-label {
     font-size: 14px;
@@ -65,6 +85,50 @@ h2 {
     display: flex;
     align-items: center;
     gap: 16px;
+    justify-content: center;
+}
+
+/* Time Display (unchanged from previous) */
+.time-display {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 32px 0;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-value {
+    font-size: 48px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    transition: transform .2s cubic-bezier(0.4,0,0.2,1),
+                opacity .2s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform, opacity;
+}
+
+.time-unit small {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+.server-toggle {
+    padding: 16px 0;
+    border-top: 1px solid var(--md-sys-color-outline);
+    margin-top: 24px;
+}
+
+.toggle-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 16px;
 }
 
 .switch {
@@ -193,9 +257,51 @@ footer p {
     margin: 4px 0;
 }
 
+/* New Secondary Info Section */
+.secondary-info {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--md-sys-color-outline);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+
+.reset-text {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.current-time {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.secondary-label {
+    color: var(--md-sys-color-outline);
+    margin-right: 4px;
+}
+
+.time-text {
+    transition: opacity .2s cubic-bezier(0.4,0,0.2,1);
+    will-change: opacity;
+}
+
+/* Updated media queries */
 @media (max-width: 600px) {
     h1 { font-size: 24px; }
     .time-display { gap: 16px; }
-    .time-value { font-size: 28px; }
+    .time-value { font-size: 36px; }
+    .time-unit small { font-size: 12px; }
     .surface { border-radius: 12px; }
+    .secondary-info { gap: 4px; }
+}
+
+@media (min-width: 1200px) {
+    .time-value { font-size: 56px; }
+    .time-display { gap: 48px; }
+    .time-unit small { font-size: 16px; }
 }

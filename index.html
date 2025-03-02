@@ -19,30 +19,25 @@
             <h2>Daily Quest Reset Timer</h2>
         </header>
 
-        <div class="surface server-toggle">
-            <div class="toggle-label">Server Region</div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input type="checkbox" id="serverToggle" onchange="switchServer(this.checked)">
-                    <span class="slider">
-                        <span class="flag-left">🇺🇸</span>
-                        <span class="flag-right">🇪🇺</span>
-                        <span class="handle"></span>
-                    </span>
-                </label>
-                <span class="toggle-text">
-                    <span id="serverText">US Server</span>
-                </span>
-            </div>
-        </div>
-
         <div class="surface timer-container">
-            <div class="current-time">
-                <h3>Current Local Time</h3>
-                <p id="currentTime" class="time-text"></p>
-            </div>
-            
             <div class="countdown">
+                <div class="server-toggle">
+                    <div class="toggle-label">Server Region</div>
+                    <div class="toggle-container">
+                        <label class="switch">
+                            <input type="checkbox" id="serverToggle" onchange="switchServer(this.checked)">
+                            <span class="slider">
+                                <span class="flag-left">🇺🇸</span>
+                                <span class="flag-right">🇪🇺</span>
+                                <span class="handle"></span>
+                            </span>
+                        </label>
+                        <span class="toggle-text">
+                            <span id="serverText">US Server</span>
+                        </span>
+                    </div>
+                </div>
+
                 <h3>Next Reset In</h3>
                 <div class="time-display">
                     <div class="time-unit">
@@ -58,7 +53,14 @@
                         <small>Seconds</small>
                     </div>
                 </div>
-                <p id="resetTime" class="reset-text"></p>
+
+                <div class="secondary-info">
+                    <p id="resetTime" class="reset-text"></p>
+                    <p class="current-time">
+                        <span class="secondary-label">Current local time:</span>
+                        <span id="currentTime" class="time-text"></span>
+                    </p>
+                </div>
             </div>
         </div>
 
