@@ -19,6 +19,10 @@
         /* Prevent FOUC */
         body { visibility: hidden; }
     </style>
+    <script type="module" defer>
+        import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
+        polyfillCountryFlagEmojis();
+      </script>
 </head>
 <body>
     <!-- Container -->
