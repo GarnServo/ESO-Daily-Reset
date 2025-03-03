@@ -9,10 +9,16 @@
     <title>ESO Daily Quest Reset Timer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" sizes="48x48" href="favicon.ico">
     <link rel="manifest" href="/images/site.webmanifest">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <style>
+        /* Prevent FOUC */
+        body { visibility: hidden; }
+    </style>
 </head>
 <body>
     <!-- Container -->
@@ -78,6 +84,12 @@
             <p>Times are displayed in your local timezone</p>
         </footer>
     </div>
+    <script>
+        // Show body after CSS is loaded
+        window.addEventListener('load', () => {
+            document.body.style.visibility = 'visible';
+        });
+    </script>
     <script src="script.js" defer></script>
 </body>
 </html>
