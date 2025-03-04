@@ -13,6 +13,19 @@
     let isVisible = true;
     let isFirstLoad = true;
 
+    let currentDisplayedValues = {
+        hours: '00',
+        minutes: '00',
+        seconds: '00'
+    };
+
+    // Add real values tracker
+    let realTimeValues = {
+        hours: '00',
+        minutes: '00',
+        seconds: '00'
+    };
+
     // Get references to DOM elements
     const elements = {
         serverText: document.getElementById('serverText'),
@@ -101,12 +114,59 @@
         updateTimer();
     };
 
-    // Function to update the timer and reset time display
-    const updateTimer = (isCatchUp = false) => {
-        const now = Date.now();
-        const timeSinceLastUpdate = now - lastUpdateTime;
-        lastUpdateTime = now;
+    // Modified getCountdownValues to be more precise
+    const getCountdownValues = () => {
+        const now = new Date();
+        const resetHour = resetTimes[currentServer].hour;
+        const resetMinute = resetTimes[currentServer].minute;
 
+        let resetTime = new Date(Date.UTC(
+            now.getUTCFullYear(),
+            now.getUTCMonth(),
+            now.getUTCDate(),
+            resetHour,
+            resetMinute,
+            0
+        ));
+
+        if (now > resetTime) {
+            resetTime.setUTCDate(resetTime.getUTCDate() + 1);
+        }
+
+        const diff = Math.max(0, resetTime - now);
+        const totalSeconds = diff / 1000;
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.ceil(totalSeconds % 60); // Changed to Math.ceil
+
+        // Handle case where seconds rounds up to 60
+        if (seconds === 60) {
+            return {
+                hours: String(hours).padStart(2, '0'),
+                minutes: String(minutes + 1).padStart(2, '0'),
+                seconds: '00',
+                resetTime
+            };
+        }
+
+        return {
+            hours: String(hours).padStart(2, '0'),
+            minutes: String(minutes).padStart(2, '0'),
+            seconds: String(seconds).padStart(2, '0'),
+            resetTime
+        };
+    };
+
+    // Function to check if display is in sync with actual time
+    const isDisplayInSync = (actual) => {
+        return currentDisplayedValues.hours === actual.hours &&
+               currentDisplayedValues.minutes === actual.minutes &&
+               currentDisplayedValues.seconds === actual.seconds;
+    };
+
+    // Modified updateTimer to use real-time as source of truth
+    const updateTimer = (forceCatchUp = false) => {
+        const now = Date.now();
         const currentDate = new Date(now);
         const newCurrentTime = currentDate.toLocaleTimeString();
 
@@ -115,37 +175,39 @@
             lastCurrentTime = newCurrentTime;
         }
 
-        const resetHour = resetTimes[currentServer].hour;
-        const resetMinute = resetTimes[currentServer].minute;
+        // Get real-time values first
+        const actualValues = getCountdownValues();
+        realTimeValues = {
+            hours: actualValues.hours,
+            minutes: actualValues.minutes,
+            seconds: actualValues.seconds
+        };
 
-        let resetTime = new Date(Date.UTC(
-            currentDate.getUTCFullYear(),
-            currentDate.getUTCMonth(),
-            currentDate.getUTCDate(),
-            resetHour,
-            resetMinute,
-            0
-        ));
+        // Function to check if we need to update a value
+        const needsUpdate = (unit) => {
+            const real = parseInt(realTimeValues[unit]);
+            const displayed = parseInt(currentDisplayedValues[unit]);
+            // Add a small buffer (50ms) to prevent getting ahead
+            return Math.abs(real - displayed) > 0;
+        };
 
-        if (currentDate > resetTime) {
-            resetTime.setUTCDate(resetTime.getUTCDate() + 1);
-        }
+        // Update all units that need updating
+        ['hours', 'minutes', 'seconds'].forEach(unit => {
+            if (needsUpdate(unit) || forceCatchUp) {
+                animateElement(elements[unit], realTimeValues[unit], true, forceCatchUp);
+                currentDisplayedValues[unit] = realTimeValues[unit];
+            }
+        });
 
-        const diff = resetTime - currentDate;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        animateElement(elements.hours, String(hours).padStart(2, '0'), true, isCatchUp);
-        animateElement(elements.minutes, String(minutes).padStart(2, '0'), true, isCatchUp);
-        animateElement(elements.seconds, String(seconds).padStart(2, '0'), true, isCatchUp);
-
-        const newResetText = `Next reset at: ${resetTime.toLocaleTimeString()} (${currentServer} Server)`;
+        const newResetText = `Next reset at: ${actualValues.resetTime.toLocaleTimeString()} (${currentServer} Server)`;
         animateElement(elements.resetTime, newResetText);
 
         if (isFirstLoad) {
             isFirstLoad = false;
         }
+
+        // Schedule next update
+        requestAnimationFrame(() => updateTimer(false));
     };
 
     // Event listener for server toggle
@@ -162,7 +224,7 @@
         }
     });
 
-    // Initial update and set interval
+    // Modified initialization
+    // Remove existing setInterval calls and just start the animation frame loop
     updateTimer();
-    setInterval(updateTimer, 1000);
 })();
