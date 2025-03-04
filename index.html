@@ -7,18 +7,24 @@
     <meta name="description" content="Elder Scrolls Online Daily Quest Reset Timer">
     <meta name="theme-color" content="#121212">
     <title>ESO Daily Quest Reset Timer</title>
+    
+    <!-- Critical CSS inline -->
+    <style>
+        body{visibility:hidden;background:#121212;color:#e0e0e0}
+        .container{max-width:800px;margin:0 auto}
+    </style>
+    
+    <!-- Optimized font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" sizes="48x48" href="favicon.ico">
-    <link rel="manifest" href="/images/site.webmanifest">
-    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles.css"></noscript>
-    <style>
-        /* Prevent FOUC */
-        body { visibility: hidden; }
-    </style>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Preload script -->
+    <link rel="preload" as="script" href="script.js">
     <script type="module" defer>
         import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
         polyfillCountryFlagEmojis();
@@ -88,10 +94,13 @@
             <p>Times are displayed in your local timezone</p>
         </footer>
     </div>
+    
+    <!-- Optimized visibility script -->
     <script>
-        // Show body after CSS is loaded
-        window.addEventListener('load', () => {
-            document.body.style.visibility = 'visible';
+        document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => {
+                document.body.style.visibility = 'visible';
+            });
         });
     </script>
     <script src="script.js" defer></script>

@@ -16,14 +16,15 @@
     padding: 0;
 }
 
+/* Critical CSS */
 body {
-    font-family: 'Twemoji Country Flags', 'Roboto', sans-serif;
+    visibility: hidden;
+    font-family: 'Roboto', sans-serif;
     background: var(--md-sys-color-background);
     color: var(--md-sys-color-on-surface);
     line-height: 1.6;
     padding: 16px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Container Styles */
@@ -110,8 +111,7 @@ h2 {
     font-size: 48px;
     font-weight: 500;
     color: var(--md-sys-color-primary);
-    transition: transform .2s cubic-bezier(0.4,0,0.2,1),
-                opacity .2s cubic-bezier(0.4,0,0.2,1);
+    transform: translateZ(0);
     will-change: transform, opacity;
 }
 
@@ -127,13 +127,6 @@ h2 {
     padding: 16px 0;
     border-top: 1px solid var(--md-sys-color-outline);
     margin-top: 24px;
-}
-
-.toggle-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: 16px;
 }
 
 .switch {
@@ -200,9 +193,6 @@ input:not(:checked) + .slider .flag-right {
     will-change: opacity;
 }
 
-/* Timer Container */
-.timer-container { padding: 24px; }
-
 /* Current Time */
 .current-time { margin-bottom: 24px; }
 
@@ -216,35 +206,6 @@ input:not(:checked) + .slider .flag-right {
 .time-text, .reset-text {
     transition: opacity .2s cubic-bezier(0.4,0,0.2,1);
     will-change: opacity;
-}
-
-/* Time Display */
-.time-display {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin: 24px 0;
-}
-
-.time-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.time-value {
-    font-size: 36px;
-    font-weight: 500;
-    color: var(--md-sys-color-primary);
-    transition: transform .2s cubic-bezier(0.4,0,0.2,1),
-                opacity .2s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform, opacity;
-}
-
-.time-unit small {
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: 12px;
-    font-weight: 400;
 }
 
 /* Reset Text */

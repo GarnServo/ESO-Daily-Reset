@@ -9,18 +9,9 @@
 
     let currentServer = 'US';
     let lastCurrentTime = '';
-    let lastUpdateTime = Date.now();
-    let isVisible = true;
     let isFirstLoad = true;
 
     let currentDisplayedValues = {
-        hours: '00',
-        minutes: '00',
-        seconds: '00'
-    };
-
-    // Add real values tracker
-    let realTimeValues = {
         hours: '00',
         minutes: '00',
         seconds: '00'
@@ -107,11 +98,11 @@
         return false;
     };
 
-    // Function to switch between US and EU servers
+    // Optimized switchServer
     const switchServer = (isChecked) => {
         currentServer = isChecked ? 'EU' : 'US';
-        animateElement(elements.serverText, `${currentServer} Server`);
-        updateTimer();
+        elements.serverText.textContent = `${currentServer} Server`;
+        updateTimer(true);
     };
 
     // Modified getCountdownValues to be more precise
@@ -157,17 +148,9 @@
         };
     };
 
-    // Function to check if display is in sync with actual time
-    const isDisplayInSync = (actual) => {
-        return currentDisplayedValues.hours === actual.hours &&
-               currentDisplayedValues.minutes === actual.minutes &&
-               currentDisplayedValues.seconds === actual.seconds;
-    };
-
-    // Modified updateTimer to use real-time as source of truth
+    // Optimized updateTimer
     const updateTimer = (forceCatchUp = false) => {
-        const now = Date.now();
-        const currentDate = new Date(now);
+        const currentDate = new Date();
         const newCurrentTime = currentDate.toLocaleTimeString();
 
         if (lastCurrentTime !== newCurrentTime) {
@@ -175,38 +158,21 @@
             lastCurrentTime = newCurrentTime;
         }
 
-        // Get real-time values first
         const actualValues = getCountdownValues();
-        realTimeValues = {
-            hours: actualValues.hours,
-            minutes: actualValues.minutes,
-            seconds: actualValues.seconds
-        };
 
-        // Function to check if we need to update a value
-        const needsUpdate = (unit) => {
-            const real = parseInt(realTimeValues[unit]);
-            const displayed = parseInt(currentDisplayedValues[unit]);
-            // Add a small buffer (50ms) to prevent getting ahead
-            return Math.abs(real - displayed) > 0;
-        };
-
-        // Update all units that need updating
         ['hours', 'minutes', 'seconds'].forEach(unit => {
-            if (needsUpdate(unit) || forceCatchUp) {
-                animateElement(elements[unit], realTimeValues[unit], true, forceCatchUp);
-                currentDisplayedValues[unit] = realTimeValues[unit];
+            if (currentDisplayedValues[unit] !== actualValues[unit] || forceCatchUp) {
+                animateElement(elements[unit], actualValues[unit], true, forceCatchUp);
+                currentDisplayedValues[unit] = actualValues[unit];
             }
         });
 
-        const newResetText = `Next reset at: ${actualValues.resetTime.toLocaleTimeString()} (${currentServer} Server)`;
-        animateElement(elements.resetTime, newResetText);
+        elements.resetTime.textContent = `Next reset at: ${actualValues.resetTime.toLocaleTimeString()} (${currentServer} Server)`;
 
         if (isFirstLoad) {
             isFirstLoad = false;
         }
 
-        // Schedule next update
         requestAnimationFrame(() => updateTimer(false));
     };
 
@@ -215,16 +181,14 @@
 
     // Handle visibility change
     document.addEventListener('visibilitychange', () => {
-        const wasVisible = isVisible;
-        isVisible = document.visibilityState === 'visible';
+        const wasVisible = document.visibilityState === 'visible';
         
-        if (isVisible && !wasVisible) {
+        if (document.visibilityState === 'visible' && !wasVisible) {
             // Only use catch-up animation when returning to tab
             updateTimer(true);
         }
     });
 
-    // Modified initialization
-    // Remove existing setInterval calls and just start the animation frame loop
+    // Start timer
     updateTimer();
 })();
