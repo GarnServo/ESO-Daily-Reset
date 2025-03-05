@@ -144,10 +144,9 @@ header.surface::before {
     margin: 0;
 }
 
+/* Remove header-divider styles since we removed it */
 .header-divider {
-    height: 1px;
-    background: var(--md-sys-color-outline);
-    margin: 32px 0;
+    display: none;
 }
 
 h1 {
@@ -179,13 +178,13 @@ h2 {
     gap: 24px;
 }
 
-/* Server Toggle (now above timer) */
+/* Server Toggle (now in timer) */
 .server-toggle {
-    padding: 32px 0;
+    padding: 0 0 32px 0;
     display: flex;
     justify-content: center;
     border-bottom: 1px solid var(--md-sys-color-outline);
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .toggle-label {
