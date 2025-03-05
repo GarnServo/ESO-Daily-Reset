@@ -3,95 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Elder Scrolls Online Daily Quest Reset Timer">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#1a1c1e" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#fef7ff" media="(prefers-color-scheme: light)">
     <title>ESO Daily Quest Reset Timer</title>
     
-    <!-- Critical CSS inline -->
+    <!-- Critical CSS -->
     <style>
-        body{visibility:hidden;background:#121212;color:#e0e0e0}
-        .container{max-width:800px;margin:0 auto}
+        body{visibility:hidden;background:#0a0a0c;color:#e3e2e6}
+        .container{max-width:900px;margin:0 auto;padding:24px}
     </style>
     
-    <!-- Optimized font loading -->
+    <!-- Font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
     
-    <!-- Main CSS -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Preload script -->
-    <link rel="preload" as="script" href="script.js">
+
+    <!-- Emoji support -->
     <script type="module" defer>
         import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
         polyfillCountryFlagEmojis();
-      </script>
+    </script>
 </head>
 <body>
     <!-- Container -->
     <div class="container">
         <!-- Header Section -->
         <header class="surface">
-            <h1>Elder Scrolls Online</h1>
-            <h2>Daily Quest Reset Timer</h2>
+            <div class="title-container">
+                <h2 class="subtitle">Elder Scrolls Online</h2>
+                <h1 class="title">Daily Reset Timer</h1>
+            </div>
+            <div class="header-divider"></div>
+            <div class="server-toggle">
+                <div class="toggle-label">Server Region</div>
+                <div class="toggle-container">
+                    <label class="switch">
+                        <input type="checkbox" id="serverToggle" onchange="switchServer(this.checked)">
+                        <span class="slider">
+                            <span class="flag-left">🇺🇸</span>
+                            <span class="flag-right">🇪🇺</span>
+                            <span class="handle"></span>
+                        </span>
+                    </label>
+                    <span class="toggle-text">
+                        <span id="serverText">US Server</span>
+                    </span>
+                </div>
+            </div>
         </header>
 
         <!-- Timer Container -->
-        <div class="surface timer-container">
-            <div class="countdown">
-                <!-- Server Toggle -->
-                <div class="server-toggle">
-                    <div class="toggle-label">Server Region</div>
-                    <div class="toggle-container">
-                        <label class="switch">
-                            <input type="checkbox" id="serverToggle" onchange="switchServer(this.checked)">
-                            <span class="slider">
-                                <span class="flag-left">🇺🇸</span>
-                                <span class="flag-right">🇪🇺</span>
-                                <span class="handle"></span>
-                            </span>
-                        </label>
-                        <span class="toggle-text">
-                            <span id="serverText">US Server</span>
-                        </span>
-                    </div>
+        <main class="surface timer-container" role="main">
+            <div class="time-display">
+                <div class="time-unit">
+                    <span id="hours" class="time-value">00</span>
+                    <small>Hours</small>
                 </div>
-
-                <!-- Countdown Display -->
-                <h3>Next Reset In</h3>
-                <div class="time-display">
-                    <div class="time-unit">
-                        <span id="hours" class="time-value">00</span>
-                        <small>Hours</small>
-                    </div>
-                    <div class="time-unit">
-                        <span id="minutes" class="time-value">00</span>
-                        <small>Minutes</small>
-                    </div>
-                    <div class="time-unit">
-                        <span id="seconds" class="time-value">00</span>
-                        <small>Seconds</small>
-                    </div>
+                <div class="time-separator"></div>
+                <div class="time-unit">
+                    <span id="minutes" class="time-value">00</span>
+                    <small>Minutes</small>
                 </div>
-
-                <!-- Secondary Info Section -->
-                <div class="secondary-info">
-                    <p id="resetTime" class="reset-text"></p>
-                    <p class="current-time">
-                        <span class="secondary-label">Current local time:</span>
-                        <span id="currentTime" class="time-text"></span>
-                    </p>
+                <div class="time-separator"></div>
+                <div class="time-unit">
+                    <span id="seconds" class="time-value">00</span>
+                    <small>Seconds</small>
                 </div>
             </div>
-        </div>
+
+            <!-- Secondary Info Section -->
+            <div class="secondary-info">
+                <p id="resetTime" class="reset-text"></p>
+                <p class="current-time">
+                    <span id="currentTime" class="time-text"></span>
+                </p>
+            </div>
+        </main>
 
         <!-- Footer Section -->
         <footer class="surface">
             <p>Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>
-            <p>Times are displayed in your local timezone</p>
         </footer>
     </div>
     
@@ -104,5 +99,12 @@
         });
     </script>
     <script src="script.js" defer></script>
+
+    <!-- Service worker registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
 </body>
 </html>

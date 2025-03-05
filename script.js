@@ -27,7 +27,7 @@
         resetTime: document.getElementById('resetTime')
     };
 
-    // Function to animate element text change
+    // Restored original animation function with catch-up support
     const animateElement = (element, newValue, transform = false, isCatchUp = false) => {
         if (element.textContent !== newValue) {
             // For regular text updates (like current time), use simple fade
@@ -48,7 +48,7 @@
             const targetValue = parseInt(newValue) || 0;
             const diff = Math.abs(targetValue - currentValue);
 
-            // Always animate on first load
+            // Always animate on first load or when catching up
             if (isFirstLoad || (diff > 1 && isCatchUp)) {
                 // Split number into digits for animation
                 const currentDigits = String(currentValue).padStart(2, '0').split('');
@@ -148,7 +148,25 @@
         };
     };
 
-    // Optimized updateTimer
+    // Add notification support
+    const requestNotificationPermission = async () => {
+        if ('Notification' in window) {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                // Store preference
+                localStorage.setItem('notifications-enabled', 'true');
+            }
+        }
+    };
+
+    // Add haptic feedback
+    const triggerHaptic = () => {
+        if ('vibrate' in navigator) {
+            navigator.vibrate(200);
+        }
+    };
+
+    // Remove updateWithTransition and simplify updateTimer
     const updateTimer = (forceCatchUp = false) => {
         const currentDate = new Date();
         const newCurrentTime = currentDate.toLocaleTimeString();
@@ -169,6 +187,18 @@
 
         elements.resetTime.textContent = `Next reset at: ${actualValues.resetTime.toLocaleTimeString()} (${currentServer} Server)`;
 
+        // Check if close to reset
+        const totalSeconds = parseInt(actualValues.hours) * 3600 + 
+                           parseInt(actualValues.minutes) * 60 + 
+                           parseInt(actualValues.seconds);
+        
+        if (totalSeconds === 300 && localStorage.getItem('notifications-enabled') === 'true') {
+            new Notification('ESO Reset Soon', {
+                body: 'Daily reset in 5 minutes',
+                icon: '/icon.png'
+            });
+        }
+
         if (isFirstLoad) {
             isFirstLoad = false;
         }
@@ -186,6 +216,20 @@
         if (document.visibilityState === 'visible' && !wasVisible) {
             // Only use catch-up animation when returning to tab
             updateTimer(true);
+        }
+    });
+
+    // Event Listeners
+    document.getElementById('notifyButton')?.addEventListener('click', () => {
+        triggerHaptic();
+        requestNotificationPermission();
+    });
+
+    // Add minimal keyboard support
+    document.getElementById('serverToggle').addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            e.target.click();
         }
     });
 
