@@ -1,10 +1,14 @@
-/* Color System - Material You */
+/* Material Design 3 Color System Properties */
 @property --md-sys-color-primary {
     syntax: '<color>';
     inherits: true;
     initial-value: #bb86fc;
 }
 
+/* Theme Variables 
+ * Defines the color palette and effects for both dark and light themes.
+ * Uses rgba for better color blending with transparency.
+ */
 :root {
     /* Enhanced color system */
     --md-sys-color-background: #0a0a0c;
@@ -24,6 +28,9 @@
     --background-outer: rgba(10, 10, 12, 1);
 }
 
+/* Light Theme Overrides
+ * Adjusts colors and effects for light mode while maintaining the same visual hierarchy
+ */
 @media (prefers-color-scheme: light) {
     :root {
         --md-sys-color-background: #fef7ff;
@@ -35,7 +42,7 @@
     }
 }
 
-/* Modern resets and optimizations */
+/* Base Layout Styles */
 * {
     margin: 0;
     padding: 0;
@@ -43,7 +50,10 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Critical CSS */
+/* Core Layout Styles 
+ * Sets up the base layout with a centered gradient background
+ * and proper font rendering
+ */
 body {
     visibility: hidden;
     font-family: 'Twemoji Country Flags', 'Inter', system-ui, sans-serif;
@@ -66,16 +76,19 @@ body {
     transform: translateZ(0);
 }
 
-/* Container Styles */
+/* Main Container and Surface Components
+ * Defines the card-like surfaces with backdrop blur and subtle borders
+ */
 .container {
     max-width: 800px;
     margin: 0 auto;
+    padding-bottom: 8px;  /* Reduce bottom padding of container */
 }
 
 .surface {
     background: var(--md-sys-color-surface);
     border-radius: 32px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;  /* Reduced from 24px */
     padding: 32px 32px 24px;  /* Adjust default surface padding */
     box-shadow: 
         var(--surface-shadow),
@@ -91,7 +104,9 @@ body {
     box-shadow: var(--md-sys-elevation-2);
 }
 
-/* Enhanced header */
+/* Header Component
+ * Features a gradient background and special effects for the title area
+ */
 header.surface {
     background: linear-gradient(
         180deg,
@@ -163,7 +178,9 @@ h2 {
     color: var(--md-sys-color-on-surface-variant);
 }
 
-/* Timer Container */
+/* Timer Display Components
+ * Contains the main countdown timer and server selection UI
+ */
 .timer-container {
     padding: 24px 24px 8px; /* Reduced bottom padding to 8px */
     display: flex;
@@ -176,14 +193,10 @@ h2 {
     padding: 24px 24px 8px;  /* Reduce bottom padding significantly */
 }
 
-/* Countdown Section */
-.countdown {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-/* Server Toggle (now in timer) */
+/* Server Selection UI
+ * Flag-based toggle for switching between US and EU servers
+ * Uses emoji flags with smooth transitions and glow effects
+ */
 .server-toggle {
     padding: 0 0 16px 0;  /* Reduced from 24px */
     margin-bottom: 16px;  /* Reduced from 32px */
@@ -267,7 +280,10 @@ input:checked ~ .flag-container .flag-right {
     letter-spacing: 0.05em;
 }
 
-/* Enhanced countdown display */
+/* Countdown Timer Display
+ * Large, gradient-colored numbers with dots as separators
+ * Includes responsive sizing and smooth animations
+ */
 .time-display {
     display: flex;
     align-items: center;
@@ -348,12 +364,15 @@ input:checked ~ .flag-container .flag-right {
     font-weight: 400;
 }
 
-/* Enhanced footer */
+/* Footer Component
+ * Minimal design with subtle text for server reset times
+ */
 footer.surface {
     background: transparent;
     border: none;
     box-shadow: none;
-    padding: 24px;
+    padding: 12px 24px;   /* Reduced vertical padding */
+    margin-bottom: 8px;   /* Reduced from 16px inherited from .surface */
     opacity: 0.8;
     transition: opacity 0.2s ease;
 }
@@ -371,7 +390,10 @@ footer p {
     opacity: 0.85;  /* Increased from 0.7 to be more visible */
 }
 
-/* Secondary Info Section */
+/* Supporting Information Section
+ * Contains current time and next reset time
+ * Uses subtle typography and borders for hierarchy
+ */
 .secondary-info {
     margin-top: 24px;
     padding: 16px 0;     /* Added padding top and bottom instead of just padding-top */
@@ -405,7 +427,10 @@ footer p {
     will-change: opacity;
 }
 
-/* Media Queries */
+/* Responsive Design
+ * Adjusts layout and typography for different screen sizes
+ * Maintains readability and touch targets on mobile
+ */
 @media (max-width: 600px) {
     h1 { font-size: 28px; }
     .time-display { gap: 24px; }
@@ -430,6 +455,9 @@ footer p {
     }
 }
 
+/* Large Screen Optimizations
+ * Increases spacing and font sizes for better readability
+ */
 @media (min-width: 1200px) {
     .time-value { font-size: 72px; }
     .time-display { gap: 48px; }
@@ -437,7 +465,9 @@ footer p {
     .container { max-width: 900px; }
 }
 
-/* Add support for reduced motion */
+/* Accessibility
+ * Respects user preferences for reduced motion
+ */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;

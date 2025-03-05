@@ -1,23 +1,35 @@
 (() => {
     'use strict';
 
-    // Define reset times for US and EU servers
+    /**
+     * Server reset times in UTC
+     * US: 10:00 UTC
+     * EU: 03:00 UTC
+     */
     const resetTimes = {
         US: { hour: 10, minute: 0 },
         EU: { hour: 3, minute: 0 }
     };
 
+    // State management
     let currentServer = 'US';
     let lastCurrentTime = '';
     let isFirstLoad = true;
 
+    /**
+     * Tracks currently displayed values to optimize updates
+     * and support smooth animations
+     */
     let currentDisplayedValues = {
         hours: '00',
         minutes: '00',
         seconds: '00'
     };
 
-    // Get references to DOM elements
+    /**
+     * DOM References
+     * Cached for performance
+     */
     const elements = {
         serverText: document.getElementById('serverText'),
         currentTime: document.getElementById('currentTime'),
@@ -27,7 +39,14 @@
         resetTime: document.getElementById('resetTime')
     };
 
-    // Restored original animation function with catch-up support
+    /**
+     * Handles smooth animations for value changes
+     * Supports both text fades and number transformations
+     * @param {HTMLElement} element - Element to animate
+     * @param {string} newValue - New value to display
+     * @param {boolean} transform - Whether to use transform animations
+     * @param {boolean} isCatchUp - Whether this is a catch-up update
+     */
     const animateElement = (element, newValue, transform = false, isCatchUp = false) => {
         if (element.textContent !== newValue) {
             // For regular text updates (like current time), use simple fade
@@ -98,14 +117,23 @@
         return false;
     };
 
-    // Optimized switchServer
+    /**
+     * Switches the server and updates the timer
+     * @param {boolean} isChecked - Whether the EU server is selected
+     */
     const switchServer = (isChecked) => {
         currentServer = isChecked ? 'EU' : 'US';
         elements.serverText.textContent = `${currentServer} Server`;
         updateTimer(true);
     };
 
-    // Modified getCountdownValues to be more precise
+    /**
+     * Formats and computes all time values needed for the countdown
+     * Uses UTC to handle timezone differences correctly
+     * Returns hours, minutes, seconds, and next reset time
+     * 
+     * @returns {{ hours: string, minutes: string, seconds: string, resetTime: Date }}
+     */
     const getCountdownValues = () => {
         const now = new Date();
         const resetHour = resetTimes[currentServer].hour;
@@ -148,7 +176,13 @@
         };
     };
 
-    // Add notification support
+    /**
+     * Handles notification permissions and local storage
+     * Only prompts once and respects user's choice
+     * Stores preference for future visits
+     * 
+     * @returns {Promise<void>}
+     */
     const requestNotificationPermission = async () => {
         if ('Notification' in window) {
             const permission = await Notification.requestPermission();
@@ -159,14 +193,24 @@
         }
     };
 
-    // Add haptic feedback
+    /**
+     * Provides tactile feedback for touch interactions
+     * Falls back gracefully when vibration API isn't available
+     */
     const triggerHaptic = () => {
         if ('vibrate' in navigator) {
             navigator.vibrate(200);
         }
     };
 
-    // Remove updateWithTransition and simplify updateTimer
+    /**
+     * Core update loop for the timer
+     * Handles all animations and state updates
+     * Optimizes performance with RAF and minimal DOM updates
+     * Manages notifications and catch-up behavior
+     * 
+     * @param {boolean} forceCatchUp - Forces immediate update with catch-up animation
+     */
     const updateTimer = (forceCatchUp = false) => {
         const currentDate = new Date();
         const newCurrentTime = currentDate.toLocaleTimeString();
@@ -206,6 +250,10 @@
         requestAnimationFrame(() => updateTimer(false));
     };
 
+    /* Event Listeners
+     * Handles user interactions and visibility changes
+     * Includes keyboard accessibility support
+     */
     // Event listener for server toggle
     document.getElementById('serverToggle').addEventListener('change', (e) => switchServer(e.target.checked));
 
