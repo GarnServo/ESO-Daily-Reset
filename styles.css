@@ -100,7 +100,7 @@ header.surface {
     );
     box-shadow: var(--surface-shadow), var(--surface-glow);
     text-align: center;
-    padding: 48px 32px;
+    padding: 32px 32px 24px;
     position: relative;
     z-index: 1;
 }
@@ -120,7 +120,7 @@ header.surface::before {
 
 .title-container {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 0;
 }
 
 .subtitle {
@@ -129,7 +129,7 @@ header.surface::before {
     color: var(--md-sys-color-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .title {
@@ -180,11 +180,11 @@ h2 {
 
 /* Server Toggle (now in timer) */
 .server-toggle {
-    padding: 0 0 32px 0;
+    padding: 0 0 16px 0;  /* Reduced from 24px */
+    margin-bottom: 16px;  /* Reduced from 32px */
     display: flex;
     justify-content: center;
     border-bottom: 1px solid var(--md-sys-color-outline);
-    margin-bottom: 32px;
 }
 
 .toggle-label {
@@ -268,7 +268,7 @@ input:checked ~ .flag-container .flag-right {
     align-items: center;
     justify-content: center;
     gap: 16px;
-    margin: 48px 0;
+    margin: 0 0 8px 0;  /* Reduced from 12px, removed top margin */
 }
 
 .time-separator {
@@ -403,7 +403,7 @@ footer p {
     .time-unit small { font-size: 12px; }
     .surface { border-radius: 24px; padding: 24px; margin-bottom: 16px; }
     .secondary-info { gap: 4px; }
-    header.surface { padding: 32px 24px; }
+    header.surface { padding: 24px 24px 20px; }
     .container { padding: 16px; }
     .title {
         font-size: 36px;
