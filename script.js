@@ -3,8 +3,7 @@
 
     /**
      * Server reset times in UTC
-     * US: 10:00 UTC
-     * EU: 03:00 UTC
+     * US: 10:00 UTC | EU: 03:00 UTC
      */
     const resetTimes = {
         US: { hour: 10, minute: 0 },
@@ -15,21 +14,15 @@
     let currentServer = 'US';
     let lastCurrentTime = '';
     let isFirstLoad = true;
-
-    /**
-     * Tracks currently displayed values to optimize updates
-     * and support smooth animations
-     */
+    
+    // Track displayed values
     let currentDisplayedValues = {
         hours: '00',
         minutes: '00',
         seconds: '00'
     };
 
-    /**
-     * DOM References
-     * Cached for performance
-     */
+    // Cache DOM elements
     const elements = {
         serverText: document.getElementById('serverText'),
         currentTime: document.getElementById('currentTime'),
@@ -177,33 +170,6 @@
     };
 
     /**
-     * Handles notification permissions and local storage
-     * Only prompts once and respects user's choice
-     * Stores preference for future visits
-     * 
-     * @returns {Promise<void>}
-     */
-    const requestNotificationPermission = async () => {
-        if ('Notification' in window) {
-            const permission = await Notification.requestPermission();
-            if (permission === 'granted') {
-                // Store preference
-                localStorage.setItem('notifications-enabled', 'true');
-            }
-        }
-    };
-
-    /**
-     * Provides tactile feedback for touch interactions
-     * Falls back gracefully when vibration API isn't available
-     */
-    const triggerHaptic = () => {
-        if ('vibrate' in navigator) {
-            navigator.vibrate(200);
-        }
-    };
-
-    /**
      * Core update loop for the timer
      * Handles all animations and state updates
      * Optimizes performance with RAF and minimal DOM updates
@@ -231,54 +197,15 @@
 
         elements.resetTime.textContent = `Next reset at: ${actualValues.resetTime.toLocaleTimeString()} (${currentServer} Server)`;
 
-        // Check if close to reset
-        const totalSeconds = parseInt(actualValues.hours) * 3600 + 
-                           parseInt(actualValues.minutes) * 60 + 
-                           parseInt(actualValues.seconds);
-        
-        if (totalSeconds === 300 && localStorage.getItem('notifications-enabled') === 'true') {
-            new Notification('ESO Reset Soon', {
-                body: 'Daily reset in 5 minutes',
-                icon: '/icon.png'
-            });
-        }
-
-        if (isFirstLoad) {
-            isFirstLoad = false;
-        }
+        if (isFirstLoad) isFirstLoad = false;
 
         requestAnimationFrame(() => updateTimer(false));
     };
 
-    /* Event Listeners
-     * Handles user interactions and visibility changes
-     * Includes keyboard accessibility support
-     */
-    // Event listener for server toggle
-    document.getElementById('serverToggle').addEventListener('change', (e) => switchServer(e.target.checked));
-
-    // Handle visibility change
-    document.addEventListener('visibilitychange', () => {
-        const wasVisible = document.visibilityState === 'visible';
-        
-        if (document.visibilityState === 'visible' && !wasVisible) {
-            // Only use catch-up animation when returning to tab
-            updateTimer(true);
-        }
-    });
-
     // Event Listeners
-    document.getElementById('notifyButton')?.addEventListener('click', () => {
-        triggerHaptic();
-        requestNotificationPermission();
-    });
-
-    // Add minimal keyboard support
-    document.getElementById('serverToggle').addEventListener('keydown', (e) => {
-        if (e.key === ' ' || e.key === 'Enter') {
-            e.preventDefault();
-            e.target.click();
-        }
+    document.getElementById('serverToggle').addEventListener('change', (e) => switchServer(e.target.checked));
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') updateTimer(true);
     });
 
     // Start timer

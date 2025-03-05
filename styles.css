@@ -10,7 +10,6 @@
  * Uses rgba for better color blending with transparency.
  */
 :root {
-    /* Enhanced color system */
     --md-sys-color-background: #0a0a0c;
     --md-sys-color-surface: rgba(28, 27, 31, 0.7);
     --md-sys-color-primary: #c094fc;
@@ -19,7 +18,6 @@
     --md-sys-color-on-surface-variant: #cac4d0;
     --md-sys-color-outline: rgba(147, 143, 153, 0.3);
     
-    /* Enhanced effects with better performance */
     --surface-shadow: 0 8px 32px rgba(0,0,0,0.24);
     --surface-glow: 0 0 80px rgba(192,148,252,0.03);
     --text-shadow: 0 0 30px rgba(192,148,252,0.3);
@@ -42,7 +40,7 @@
     }
 }
 
-/* Base Layout Styles */
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
