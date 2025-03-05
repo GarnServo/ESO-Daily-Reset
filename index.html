@@ -39,19 +39,17 @@
             </div>
             <div class="header-divider"></div>
             <div class="server-toggle">
-                <div class="toggle-label">Server Region</div>
                 <div class="toggle-container">
-                    <label class="switch">
-                        <input type="checkbox" id="serverToggle" onchange="switchServer(this.checked)">
-                        <span class="slider">
-                            <span class="flag-left">🇺🇸</span>
-                            <span class="flag-right">🇪🇺</span>
-                            <span class="handle"></span>
-                        </span>
+                    <label class="server-switch">
+                        <input type="checkbox" id="serverToggle">
+                        <div class="flag-container">
+                            <span class="flag flag-left">🇺🇸</span>
+                            <span class="flag flag-right">🇪🇺</span>
+                        </div>
                     </label>
-                    <span class="toggle-text">
+                    <div class="server-status">
                         <span id="serverText">US Server</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </header>

@@ -181,7 +181,9 @@ h2 {
 
 /* Server Toggle (now above timer) */
 .server-toggle {
-    padding: 16px 0;
+    padding: 32px 0;
+    display: flex;
+    justify-content: center;
     border-bottom: 1px solid var(--md-sys-color-outline);
     margin-bottom: 24px;
 }
@@ -195,9 +197,70 @@ h2 {
 
 .toggle-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 16px;
+}
+
+.server-switch {
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+
+.server-switch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.flag-container {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 32px;
+    padding: 16px;
+    background: var(--md-sys-color-surface);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 20px;
+    box-shadow: var(--surface-shadow);
+}
+
+.flag-container:focus-within {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+.flag {
+    font-size: 32px;
+    line-height: 1;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    filter: drop-shadow(0 0 12px rgba(192,148,252,0));
+    opacity: 0.5;
+    transform: scale(0.85);
+}
+
+/* Active flag states */
+input:not(:checked) ~ .flag-container .flag-left,
+input:checked ~ .flag-container .flag-right {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 16px rgba(192,148,252,0.3));
+}
+
+.server-status {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Enhanced countdown display */
@@ -250,79 +313,11 @@ h2 {
     opacity: 0.8;
 }
 
-/* Server Toggle */
-.server-toggle {
-    padding: 16px 0;
-    border-top: 1px solid var(--md-sys-color-outline);
-    margin-top: 24px;
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 64px;
-    height: 34px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: var(--md-sys-color-surface-variant);
-    border-radius: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6px;
-    transition: background-color .3s cubic-bezier(0.4,0,0.2,1);
-}
-
-.switch input:checked + .slider {
-    background: var(--md-sys-color-primary-container);
-}
-
+/* Remove old toggle styles */
+.switch,
+.slider,
 .handle {
-    position: absolute;
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background: var(--md-sys-color-on-primary-container);
-    border-radius: 50%;
-    transition: transform .3s cubic-bezier(0.4,0,0.2,1);
-}
-
-input:checked + .slider .handle { transform: translateX(30px); }
-
-.flag-left, .flag-right {
-    font-size: 18px;
-    line-height: 1;
-    transition: transform .3s cubic-bezier(0.4,0,0.2,1),
-                opacity .3s cubic-bezier(0.4,0,0.2,1);
-}
-
-input:checked + .slider .flag-left {
-    opacity: 0.5;
-    transform: scale(0.8);
-}
-
-input:not(:checked) + .slider .flag-right {
-    opacity: 0.5;
-    transform: scale(0.8);
-}
-
-.toggle-text {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--md-sys-color-on-surface-variant);
-    transition: opacity .2s cubic-bezier(0.4,0,0.2,1);
-    will-change: opacity;
+    display: none;
 }
 
 /* Current Time */
