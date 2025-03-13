@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/SoftwareApplication">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Elder Scrolls Online Daily Quest Reset Timer">
     <meta name="theme-color" content="#1a1c1e">
-    <title>ESO Daily Quest Reset Timer</title>
+
+    <!-- HTML Meta Tags -->
+    <title>ESO Daily Reset Timer</title>
+    <meta name="description" content="A lightweight countdown to the next ESO daily reset, for both US and EU.">
+    <meta name="keywords" content="ESO, Elder Scrolls Online, daily reset, daily, dailies, reset, time, timer, countdown, server reset, US server, EU server, game timer">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
+    <link rel="canonical" href="https://garnservo.github.io/ESO-Daily-Reset/">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://garnservo.github.io/ESO-Daily-Reset/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ESO Daily Reset Timer">
+    <meta property="og:description" content="A lightweight countdown to the next ESO daily reset, for both US and EU.">
+    <meta property="og:image" content="">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="garnservo.github.io">
+    <meta property="twitter:url" content="https://garnservo.github.io/ESO-Daily-Reset/">
+    <meta name="twitter:title" content="ESO Daily Reset Timer">
+    <meta name="twitter:description" content="A lightweight countdown to the next ESO daily reset, for both US and EU.">
+    <meta name="twitter:image" content="">
+        
     <!-- Critical CSS -->
     <style>
         body{visibility:hidden;background:#0a0a0c;color:#e3e2e6}
@@ -27,22 +46,64 @@
         import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
         polyfillCountryFlagEmojis();
     </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ESO Daily Reset Timer",
+        "description": "A lightweight countdown timer that tracks Elder Scrolls Online daily reset times for both US (10:00 UTC) and EU (03:00 UTC) servers.",
+        "applicationCategory": "UtilityApplication",
+        "applicationSubCategory": "Gaming Tool",
+        "operatingSystem": "Any",
+        "url": "https://garnservo.github.io/ESO-Daily-Reset/",
+        "browserRequirements": "Requires JavaScript enabled",
+        "isAccessibleForFree": true,
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "about": {
+            "@type": "VideoGame",
+            "name": "The Elder Scrolls Online",
+            "author": {
+                "@type": "Organization",
+                "name": "Zenimax Online Studios"
+            },
+            "gameServer": [{
+                "@type": "GameServer",
+                "name": "US Server",
+                "serverStatus": "Online",
+                "timeZone": "UTC"
+            }, {
+                "@type": "GameServer",
+                "name": "EU Server",
+                "serverStatus": "Online",
+                "timeZone": "UTC"
+            }]
+        }
+    }
+    </script>
+
+    <meta itemprop="name" content="ESO Daily Reset Timer">
+    <meta itemprop="description" content="A lightweight countdown to the next ESO daily reset, for both US and EU servers.">
 </head>
 <body>
     <!-- Container -->
-    <div class="container">
+    <div class="container" itemscope itemtype="http://schema.org/SoftwareApplication">
         <!-- Header Section -->
-        <header class="surface">
+        <header class="surface" itemprop="about" itemscope itemtype="http://schema.org/VideoGame">
             <div class="title-container">
-                <h2 class="subtitle">Elder Scrolls Online</h2>
+                <h2 class="subtitle" itemprop="name">Elder Scrolls Online</h2>
                 <h1 class="title">Daily Reset Timer</h1>
             </div>
         </header>
 
         <!-- Timer Container -->
         <main class="surface timer-container" role="main">
-            <!-- Move server toggle here -->
-            <div class="server-toggle">
+            <div class="server-toggle" itemprop="gameServer" itemscope itemtype="http://schema.org/GameServerStatus">
                 <div class="toggle-container">
                     <label class="server-switch">
                         <input type="checkbox" id="serverToggle">
@@ -57,7 +118,8 @@
                 </div>
             </div>
 
-            <div class="time-display">
+            <div class="time-display" itemscope itemtype="http://schema.org/Duration" aria-live="polite" aria-atomic="true">
+                <meta itemprop="timeRequired" content="PT24H"/>
                 <div class="time-unit">
                     <span id="hours" class="time-value">00</span>
                     <small>Hours</small>
@@ -75,7 +137,8 @@
             </div>
 
             <!-- Secondary Info Section -->
-            <div class="secondary-info">
+            <div class="secondary-info" itemprop="schedule" itemscope itemtype="http://schema.org/Schedule">
+                <meta itemprop="repeatFrequency" content="P1D"/>
                 <p id="resetTime" class="reset-text"></p>
                 <p class="current-time">
                     <span id="currentTime" class="time-text"></span>
@@ -84,8 +147,8 @@
         </main>
 
         <!-- Footer Section -->
-        <footer class="surface">
-            <p>Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>
+        <footer class="surface" itemscope itemtype="http://schema.org/GameServerStatus">
+            <p itemprop="description">Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>
         </footer>
     </div>
     
