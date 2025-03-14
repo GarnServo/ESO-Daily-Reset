@@ -43,8 +43,20 @@
 
     <!-- Emoji support -->
     <script type="module" defer>
-        import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
-        polyfillCountryFlagEmojis();
+        // Only polyfill if not Firefox and if needed
+        if (!navigator.userAgent.includes('Firefox')) {
+            // Test if flag emojis render properly
+            const testFlag = document.createElement('canvas')
+                .getContext('2d')
+                .measureText('🇺🇸').width;
+            
+            if (testFlag < 20) { // If emoji doesn't render properly
+                import('https://cdn.skypack.dev/country-flag-emoji-polyfill')
+                    .then(({ polyfillCountryFlagEmojis }) => {
+                        polyfillCountryFlagEmojis();
+                    });
+            }
+        }
     </script>
 
     <!-- Schema.org JSON-LD -->
@@ -139,18 +151,9 @@
             <!-- Secondary Info Section -->
             <div class="secondary-info" itemprop="schedule" itemscope itemtype="http://schema.org/Schedule">
                 <meta itemprop="repeatFrequency" content="P1D"/>
-                <p id="resetTime" class="reset-text"></p>
+                <p id="resetTime" class="reset-text"></p><script src="script.js" defer></script>
                 <p class="current-time">
-                    <span id="currentTime" class="time-text"></span>
-                </p>
-            </div>
-        </main>
-
-        <!-- Footer Section -->
-        <footer class="surface" itemscope itemtype="http://schema.org/GameServerStatus">
-            <p itemprop="description">Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>
-        </footer>
-    </div>
+                    <span id="currentTime" class="time-text"></span>                </p>            </div>        </main>        <!-- Footer Section -->        <footer class="surface" itemscope itemtype="http://schema.org/GameServerStatus">            <p itemprop="description">Reset Times: US Server - 10:00 UTC | EU Server - 03:00 UTC</p>        </footer>    </div>
     
     <!-- Optimized visibility script -->
     <script>
