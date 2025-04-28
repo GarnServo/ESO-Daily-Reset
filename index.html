@@ -111,6 +111,17 @@
                 <h2 class="subtitle" itemprop="name">Elder Scrolls Online</h2>
                 <h1 class="title">Daily Reset Timer</h1>
             </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <div class="flag-container small">
+                        <span class="flag flag-left">☀️</span>
+                        <span class="flag flag-right">🌙</span>
+                    </div>
+                </label>
+            </div>
         </header>
 
         <!-- Timer Container -->
@@ -162,7 +173,39 @@
                 document.body.style.visibility = 'visible';
             });
         });
+
+        // Theme Toggle Script
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Function to set the theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+            }
+        }
+
+        // Function to get the current theme from local storage
+        function getTheme() {
+            return localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        }
+
+        // Set the initial theme
+        setTheme(getTheme());
+        themeToggle.checked = getTheme() === 'dark';
+
+        // Add event listener to the theme toggle
+        themeToggle.addEventListener('change', () => {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            setTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
     </script>
     <script src="script.js" defer></script>
 </body>
 </html>
+``` 
